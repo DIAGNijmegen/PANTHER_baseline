@@ -4,7 +4,7 @@
 set -e
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DOCKER_IMAGE_TAG="example-algorithm-open-development-phase"
+DOCKER_IMAGE_TAG="PANTHER-task1-baseline"
 
 
 # Check if an argument is provided
