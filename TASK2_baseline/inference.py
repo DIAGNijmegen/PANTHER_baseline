@@ -1,4 +1,6 @@
+#  Copyright 2025 Diagnostic Image Analysis Group, Radboudumc, Nijmegen, The Netherlands
 """
+
 The following is the inference script for the baseline algorithm for Task 2 of the PANTHER challenge.
 
 It is meant to run within a container.
