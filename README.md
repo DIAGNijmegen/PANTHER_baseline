@@ -1,7 +1,7 @@
 # Baseline Algorithms for the [PANTHER challenge](https://panther.grand-challenge.org/): Pancreatic Tumor Segmentation in Therapeutic and Diagnostic MRI
 This repository contains the baseline algorithms for the PANTHER challenge. Model weights were uploaded to Zenodo and can be downloaded [here](https://zenodo.org/records/15211865).
 
-## ▶️Task 1: Pancreatic Tumor Segmentation on Diagnostic MRIs
+## ▶️ Task 1: Pancreatic Tumor Segmentation on Diagnostic MRIs
 
 The algorithm is built on the [nnU-Net framework](https://github.com/MIC-DKFZ/nnUNet) (v2) [1] and employs a two-step process to segment pancreatic ductal adenocarcinoma (PDAC) on T1-weighted, contrast-enhanced arterial phase MRIs. In the first step, a nnU-Net model is trained for tumor segmentation. In the second step, the segmentation is refined through post-processing: the input image is downsampled to half its resolution, and a pancreas mask is generated using [MRSegmentator](https://github.com/hhaentze/MRSegmentator) [2]. The generated pancreas mask is then upsampled to the original resolution, and connected component analysis is applied to the tumor segmentation. 
 
@@ -51,11 +51,13 @@ Also note the pancreas mask corresponds to label = 7.*
 
 Finally the pancreas mask is upsampled to the original input dimensions using the [upsample_mask](https://github.com/DIAGNijmegen/PANTHER_baseline/blob/main/TASK1_baseline/data_utils.py) function and the connected components selection is done with the [filter_components](https://github.com/DIAGNijmegen/PANTHER_baseline/blob/main/TASK1_baseline/data_utils.py) function.
 
+> The algorithm is available on Grand Challenge and can be accessed via [this link](https://grand-challenge.org/algorithms/panther_task1_baseline/).
+
 ## ▶️ Task 2: Pancreatic Tumor Segmentation on MR-Linac MRIs
 The algorithm is also based on the [nnU-Net framework](https://github.com/MIC-DKFZ/nnUNet) (v2) and consists of a two step approach for pancreatic tumor segmentation on T2-weighted MR-Linac MRIs, inspired by the baseline model[3] of the [PANORAMA challenge](https://panorama.grand-challenge.org/).
 First a segmentation of the pancreas is obtained from downsampled images using [MRSegmentator](https://github.com/hhaentze/MRSegmentator/). Based on this segmentation a region of interest (ROI) around the pancreas is cropped from the original input T2W MRI. The cropped ROIS are then used to train a nnU-Net algorithhm. The process is shown in Figure 2.
 
-<img src="task2_pipeline.png" alt="Pipeline of the baseline algorithm for Task 2 of the PANTHER challenge" style="display: block; margin-bottom: 20px; width: 70%; height: auto;">
+<img src="task2_pipeline.png" alt="Pipeline of the baseline algorithm for Task 2 of the PANTHER challenge" style="display: block; margin-bottom: 20px; width: 80%; height: auto;">
 <p align="center">Figure 2: Pipeline of the baseline algorithm for Task 2 of the PANTHER challenge.</p>
 
 ### Pancreas Segmentation on Low Resolution Images
@@ -87,6 +89,46 @@ nnUNetv2_train -d Dataset091_PantherTask2 1 3d_fullres -pretrained_weights /path
 nnUNetv2_train -d Dataset091_PantherTask2 2 3d_fullres -pretrained_weights /path/to/pretrained/Task1/weights/fold_all/checkpoint_latest.pth
 ```
 **NOTE:** Pretraining was done for 300 epochs to avoid overfitting.
+
+> The algorithm is available on Grand Challenge and can be accessed via [this link](https://grand-challenge.org/algorithms/nnunetdefault/).
+
+## ⚙️ Running the Baseline Models Locally
+
+To try out the baseline models on your local system, follow these steps:
+
+1. Open a terminal or command prompt
+2. Navigate to the directory where you want to clone the repository:
+```
+cd /path/to/your/desired/location
+```
+3. Clone the repository:
+```
+git clone https://github.com/DIAGNijmegen/PANTHER_baseline.git
+```
+4. Change to the task directory you want to run (e.g., Task1 or Task2):
+```
+cd /path/to/PANTHER_baseline/Task1_baseline # or Task2_baseline 
+```
+6. Follow the instructions provided [here](https://github.com/DIAGNijmegen/PANTHER_baseline/tree/main/TASK1_baseline/model) to set up the necessary files. Then, to test the container locally, run:
+```
+./do_test_run.sh
+```
+This script launches Docker to execute the **inference.py** script.
+
+### Extending the Baseline Models
+While this baseline provides a starting point, you can consider several enhancements:
+
+- **Custom Pipeline:** Modify the *inference.py* script to experiment with your own pipeline.
+- **Model Weights:** Integrate your own trained model weights into the *model* folder.
+- **Pretraining Strategies:** Use the unlabeled data from Task 1 for unsupervised or semi-supervised pretraining.
+- **Data Augmentation & Preprocessing:** Explore alternative data augmentation and preprocessing techniques to improve model robustness.
+- **Loss Functions:** Experiment with different loss functions to potentially enhance segmentation performance.
+  
+These are just some ideas of what you could try ! Finally, after implementing your modifications, you can run:
+```
+./do_save.sh
+```
+This script will generate a .tar.gz file, which can then be uploaded to Grand Challenge as the container for your algorithm.
 
 ### References
 
