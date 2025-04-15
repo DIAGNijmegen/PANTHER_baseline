@@ -68,7 +68,6 @@ As a preprocessing step, images are resampled to a spacing of **(3,3,6)**—thre
 
 After generating the pancreas mask (label = 7), images in the training set are cropped using the custom [CropROI function](https://github.com/DIAGNijmegen/PANTHER_baseline/blob/main/TASK2_baseline/data_utils.py). A margin of 30 × 30 × 30 mm was used to ensure that the entire pancreas, along with some surrounding context, was included in the cropped volume. A tumor and pancreas segmentation model, pre-trained on the Task 1 training data, was then used as starting weights for training with the cropped T2-weighted dataset. The pre-training process follows the steps detailed [here](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/pretraining_and_finetuning.md):
 
-**Pre-training Commands:**
 
 **Pre-training:**
 
