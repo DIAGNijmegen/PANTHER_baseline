@@ -108,7 +108,7 @@ git clone https://github.com/DIAGNijmegen/PANTHER_baseline.git
 ```
 cd /path/to/PANTHER_baseline/Task1_baseline # or Task2_baseline 
 ```
-6. Follow the instructions provided [here](https://github.com/DIAGNijmegen/PANTHER_baseline/tree/main/TASK1_baseline/model) to set up the necessary files. Then, to test the container locally, run:
+5. Follow the instructions provided [here](https://github.com/DIAGNijmegen/PANTHER_baseline/tree/main/TASK1_baseline/model) to set up the necessary files. Then, to test the container locally, run:
 ```
 ./do_test_run.sh
 ```
