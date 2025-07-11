@@ -189,7 +189,8 @@ def evaluate_segmentation_performance(pred_dir, gt_dir, subject_list=None, verbo
 			# Compute max_distance to set distance metrics.
 			max_distance = np.linalg.norm(np.array(mask_gt.shape) * np.array(spacing_gt))
 			# Overlap-based metrics are 0; distances get the penalty.
-			return {
+			subj_metrics = {
+				"subject": subj,
 				"volumetric_dice": 0.0,
 				"surface_dice": 0.0,
 				"hausdorff95": max_distance,
